@@ -7,14 +7,13 @@ from base64 import b64decode, b64encode
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-url_completion = 'https://hangyan-openapi-gpt-proxy-11044-8080.apps.danlu.netease.com/proxy/hangyan/openapi/gpt/api/v2/text/completion'
-url_chat = 'https://hangyan-openapi-gpt-proxy-11044-8080.apps.danlu.netease.com/proxy/hangyan/openapi/gpt/api/v2/text/chat'
+url_completion = ''
+url_chat = ''
 headers = {
-    'Access-Key': '845f3772d8fde3c131457028fd8de81706766ddfd2e5a62063429209ea5fc4f3',
-    'Access-Secret': '11b59059e45dbd471f48e05be8428af8f65144743897ba0aed48e3f897b503d7',
+    'Access-Key': 'yours',
+    'Access-Secret': 'yours',
     'Content-Type': 'application/json',
     'Accept-Encoding': 'identity',
-    'projectId':'jmP1aez44k4Bo3EfI8RIJoC3NmHeGV2lDoKj',
 }
 url_llama = 'http://localhost:11434/api/chat'
 llama_data_chat = {
