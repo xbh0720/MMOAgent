@@ -44,19 +44,19 @@ llm_data_chat = {
     "messages": [
         {
           "role": "system",
-          "content": "在一个搜索引擎中。"
+          "content": "In a search system."
         },
         {
             "role": "user",
-            "content": "你好呀"
+            "content": "Hello"
         },
         {
             "role": "assistant",
-            "content": "\n\n你好，有什么可以帮助你的吗？"
+            "content": "\n\nHello, how can I help you？"
         },
         {
             "role": "user",
-            "content": "你认识new bing吗？"
+            "content": "Do you know new bing？"
         }
     ],
     "model": "gpt-3.5-turbo", # "gpt-3.5-turbo-1106", #"gpt-4-0613", 
@@ -69,30 +69,29 @@ llm_data_chat = {
 }
 def retry_strategy():
     retry = Retry(
-        total=5, # 总共重试的次数
-        status_forcelist=[429, 500, 502, 503, 504], # 指定哪些响应状态码需要重试
-        # method_whitelist=["HEAD", "GET", "POST"], # 指定哪些请求方法需要重试
-        backoff_factor=1 # 退避因子，指定等待时间的增加方式
+        total=5, 
+        status_forcelist=[429, 500, 502, 503, 504], 
+        # method_whitelist=["HEAD", "GET", "POST"], 
+        backoff_factor=1 
     )
     adapter = HTTPAdapter(max_retries=retry)
     return adapter
 
 def post_request(url, headers, json_data, timeout=50000):
     session = requests.Session()
-    session.mount("https://", retry_strategy()) # 挂载重试策略到会话
-    #出错了应该重新生成，这里重试3次，仍然直接return，gpt4明显选择的action更合理，但是速度也慢很多，
+    session.mount("https://", retry_strategy())
     try:
         response = session.post(url, headers=headers, json=json_data, timeout=timeout)
-        response.raise_for_status()  # 如果响应不是 200，产生异常
-        return response.json()  # 返回JSON响应
+        response.raise_for_status()  
+        return response.json()
     except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error occurred: {http_err}")  # 打印HTTP错误
+        print(f"HTTP error occurred: {http_err}")  
     except requests.exceptions.ConnectionError as conn_err:
-        print(f"Error Connecting: {conn_err}")  # 打印连接错误
+        print(f"Error Connecting: {conn_err}")
     except requests.exceptions.Timeout as timeout_err:
-        print(f"Timeout error: {timeout_err}")  # 打印超时错误
+        print(f"Timeout error: {timeout_err}")  
     except requests.exceptions.RequestException as err:
-        print(f"An error occurred: {err}")  # 打印其他错误
+        print(f"An error occurred: {err}")
     return None
 
 
@@ -130,7 +129,6 @@ def llm_completion2chat(prompt):
 
 
 def llm_server(req={}, mode='chat'):
-    # 发起POST请求的函数调用示例
     model  = req.get('model', 'gpt')
     if "gpt" in model:
         llm_data = llm_data_chat if mode == 'chat' else llm_data_completion
