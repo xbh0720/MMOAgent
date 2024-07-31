@@ -1,15 +1,3 @@
-'''
-Author: Shiwei Zhao
-Date: 2023-08-18 10:45:20
-FilePath: \mmo-economist\foundation\entities\resources.py
-Copyright (c) 2023 by NetEase, Inc., All Rights Reserved.
-'''
-# Copyright (c) 2020, salesforce.com, inc.
-# All rights reserved.
-# SPDX-License-Identifier: BSD-3-Clause
-# For full license text, see the LICENSE file in the repo root
-# or https://opensource.org/licenses/BSD-3-Clause
-
 import numpy as np
 
 from foundation.base.registrar import Registry
